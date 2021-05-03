@@ -34,7 +34,7 @@ export const Tag = props => {
       style={{
         background: props.bck ? props.bck : '#ffffff',
         fontSize: props.size ? props.size : '15px',
-        color: props.colorv ? props.color : '#000000',
+        color: props.color ? props.color : '#000000',
         padding: '5px 10px',
         display: 'inline-block',
         fontFamily: 'Righteous',
