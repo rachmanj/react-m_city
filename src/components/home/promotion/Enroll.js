@@ -18,7 +18,7 @@ function Enroll() {
         .email('Invalid email')
         .required('The email is required'),
     }),
-    onSubmit: values => {
+    onSubmit: (values, { resetForm }) => {
       setLoading(true);
       submitForm(values);
     },
@@ -31,9 +31,14 @@ function Enroll() {
         .get();
 
       if (isOnTheList.docs.length >= 1) {
-        console.log('Sorry you are already on the list');
+        showErrorToast('Sorry you are already on the list');
+        setLoading(false);
         return false;
       }
+      await promotionsCollection.add({ email: values.email });
+      formik.resetForm();
+      setLoading(false);
+      showSuccessToast('Congratulation !!!');
     } catch (error) {
       console.log(error);
     }

@@ -8,13 +8,20 @@ import Header from './components/header_footer/Header';
 import Footer from './components/header_footer/Footer';
 import Home from './components/home';
 import SignIn from './components/Signin';
+
 import Dashboard from './components/Admin/Dashboard';
+import AdminPlayers from './components/Admin/players';
 
 const Routes = ({ user }) => {
   return (
     <Router>
       <Header user={user} />
       <Switch>
+        <Route
+          path="/admin_players"
+          exact
+          component={AuthGuard(AdminPlayers)}
+        />
         <Route path="/dashboard" exact component={AuthGuard(Dashboard)} />
         <Route
           path="/sign_in"
