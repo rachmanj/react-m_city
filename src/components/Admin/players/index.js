@@ -96,7 +96,7 @@ const AdminPlayers = () => {
             <TableBody>
               {players
                 ? players.map((player, i) => (
-                    <TableRow>
+                    <TableRow key={player.id}>
                       <TableCell>
                         <Link to={`/admin_players/edit_player/${player.id}`}>
                           {player.name}

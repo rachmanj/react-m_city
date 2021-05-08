@@ -11,12 +11,23 @@ import SignIn from './components/Signin';
 
 import Dashboard from './components/Admin/Dashboard';
 import AdminPlayers from './components/Admin/players';
+import AddEditPlayers from './components/Admin/players/AddEditPlayers';
 
 const Routes = ({ user }) => {
   return (
     <Router>
       <Header user={user} />
       <Switch>
+        <Route
+          path="/admin_players/edit_player/:playerid"
+          exact
+          component={AuthGuard(AddEditPlayers)}
+        />
+        <Route
+          path="/admin_players/add_player"
+          exact
+          component={AuthGuard(AddEditPlayers)}
+        />
         <Route
           path="/admin_players"
           exact
