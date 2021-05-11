@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import AdminLayout from '../../../Hoc/AdminLayout';
-import Fileuploader from '../../utils/fileUploader';
+import Fileuploader from '../../utils/FileUploader';
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 import {
-  showSuccessToast,
   showErrorToast,
+  showSuccessToast,
   textErrorHelper,
   selectErrorHelper,
   selectIsError,
@@ -39,14 +39,14 @@ const AddEditPlayers = props => {
     enableReinitialize: true,
     initialValues: values,
     validationSchema: Yup.object({
-      name: Yup.string().required('This field is required'),
-      lastname: Yup.string().required('This field is required'),
+      name: Yup.string().required('This input is required'),
+      lastname: Yup.string().required('This input is required'),
       number: Yup.number()
-        .required('This field is required')
-        .min(0, 'Minimun is zero')
-        .max(100, 'Maximum is 100'),
-      position: Yup.string().required('This field is required'),
-      image: Yup.string().required('This field is required'),
+        .required('This input is required')
+        .min(0, 'The minimum is cero')
+        .max(100, 'The max is 100'),
+      position: Yup.string().required('This input is required'),
+      image: Yup.string().required('This input is required'),
     }),
     onSubmit: values => {
       submitForm(values);
@@ -92,6 +92,7 @@ const AddEditPlayers = props => {
         .get()
         .then(snapshot => {
           if (snapshot.data()) {
+            ////
             firebase
               .storage()
               .ref('players')
@@ -105,7 +106,7 @@ const AddEditPlayers = props => {
             setFormType('edit');
             setValues(snapshot.data());
           } else {
-            showErrorToast('Data not found');
+            showErrorToast('Sorry, nothing was found');
           }
         })
         .catch(error => {
@@ -127,48 +128,49 @@ const AddEditPlayers = props => {
   };
 
   return (
-    <AdminLayout title={formType === 'add' ? 'Add Player' : 'Edit Player'}>
+    <AdminLayout title={formType === 'add' ? 'Add player' : 'Edit player'}>
       <div className="editplayers_dialog_wrapper">
         <div>
           <form onSubmit={formik.handleSubmit}>
             <FormControl error={selectIsError(formik, 'image')}>
               <Fileuploader
                 dir="players"
-                defaultImg={defaultImg}
-                defaultImgName={formik.values.image}
+                defaultImg={defaultImg} /// image url
+                defaultImgName={formik.values.image} /// name of file
                 filename={filename => updateImageName(filename)}
                 resetImage={() => resetImage()}
               />
               {selectErrorHelper(formik, 'image')}
             </FormControl>
+
             <hr />
-            <h4>Player Info</h4>
+            <h4>Player info</h4>
             <div className="mb-5">
               <FormControl>
                 <TextField
                   id="name"
                   name="name"
                   variant="outlined"
-                  label="First Name"
-                  placeholder="Add First Name"
+                  placeholder="Add firstname"
                   {...formik.getFieldProps('name')}
                   {...textErrorHelper(formik, 'name')}
                 />
               </FormControl>
             </div>
+
             <div className="mb-5">
               <FormControl>
                 <TextField
                   id="lastname"
                   name="lastname"
                   variant="outlined"
-                  label="Last Name"
-                  placeholder="Add Last Name"
+                  placeholder="Add lastname"
                   {...formik.getFieldProps('lastname')}
                   {...textErrorHelper(formik, 'lastname')}
                 />
               </FormControl>
             </div>
+
             <div className="mb-5">
               <FormControl>
                 <TextField
@@ -176,21 +178,19 @@ const AddEditPlayers = props => {
                   id="number"
                   name="number"
                   variant="outlined"
-                  label="Number"
-                  placeholder="Add Number"
+                  placeholder="Add number"
                   {...formik.getFieldProps('number')}
                   {...textErrorHelper(formik, 'number')}
                 />
               </FormControl>
             </div>
+
             <div className="mb-5">
               <FormControl error={selectIsError(formik, 'position')}>
-                <TextField
+                <Select
                   id="position"
-                  select
                   name="position"
                   variant="outlined"
-                  label="Position"
                   displayEmpty
                   {...formik.getFieldProps('position')}
                 >
@@ -198,20 +198,21 @@ const AddEditPlayers = props => {
                     Select a position
                   </MenuItem>
                   <MenuItem value="Keeper">Keeper</MenuItem>
-                  <MenuItem value="Defense">Defense</MenuItem>
+                  <MenuItem value="Defence">Defence</MenuItem>
                   <MenuItem value="Midfield">Midfield</MenuItem>
                   <MenuItem value="Striker">Striker</MenuItem>
-                </TextField>
+                </Select>
                 {selectErrorHelper(formik, 'position')}
               </FormControl>
             </div>
+
             <Button
               type="submit"
               variant="contained"
               color="primary"
               disabled={loading}
             >
-              {formType === 'add' ? 'Add Player' : 'Edit Player'}
+              {formType === 'add' ? 'Add player' : 'Edit player'}
             </Button>
           </form>
         </div>

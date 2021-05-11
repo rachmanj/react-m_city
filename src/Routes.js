@@ -8,16 +8,35 @@ import Header from './components/header_footer/Header';
 import Footer from './components/header_footer/Footer';
 import Home from './components/home';
 import SignIn from './components/Signin';
+import TheTeam from './components/theTeam';
+import TheMatches from './components/theMatches';
 
 import Dashboard from './components/Admin/Dashboard';
 import AdminPlayers from './components/Admin/players';
 import AddEditPlayers from './components/Admin/players/AddEditPlayers';
+import AdminMatches from './components/Admin/matches';
+import AddEditMatch from './components/Admin/matches/AddEditMatch';
 
 const Routes = ({ user }) => {
   return (
     <Router>
       <Header user={user} />
       <Switch>
+        <Route
+          path="/admin_matches/edit_match/:matchid"
+          exact
+          component={AuthGuard(AddEditMatch)}
+        />
+        <Route
+          path="/admin_matches/add_match"
+          exact
+          component={AuthGuard(AddEditMatch)}
+        />
+        <Route
+          path="/admin_matches"
+          exact
+          component={AuthGuard(AdminMatches)}
+        />
         <Route
           path="/admin_players/edit_player/:playerid"
           exact
@@ -34,6 +53,8 @@ const Routes = ({ user }) => {
           component={AuthGuard(AdminPlayers)}
         />
         <Route path="/dashboard" exact component={AuthGuard(Dashboard)} />
+        <Route path="/the_matches" exact component={TheMatches} />
+        <Route path="/the_team" exact component={TheTeam} />
         <Route
           path="/sign_in"
           exact

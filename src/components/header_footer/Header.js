@@ -26,7 +26,7 @@ const Header = ({ user }) => {
           <Button color="inherit">The Team</Button>
         </Link>
 
-        <Link to="/the_mathches">
+        <Link to="/the_matches">
           <Button color="inherit">Mathces</Button>
         </Link>
 
